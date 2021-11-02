@@ -1,0 +1,208 @@
+Your unit testing lab has two phases:
+
+1) Complete a partially written test, to warm up.
+2) Create a full test from scratch, to test your learning.
+
+For reference, you can use the official unittest documentation:
+
+https://docs.python.org/3/library/unittest.html
+
+### PHASE 1 ###
+
+This phase has several simple steps:
+
+# Step 1
+
+In your labs folder, you have a file named "greeting.py":
+
+----
+def greet(name):
+    return ""
+----
+
+Your labs folder also has a file named "test_greeting.py", containing this:
+
+----
+import unittest
+from greeting import greet
+
+class TestGreeting(unittest.TestCase):
+    def test_greet(self):
+        pass
+----
+
+(`pass` is a keyword of Python that means "do nothing".)
+
+Open up a command prompt, and go into this directory.  Run the test
+using the following command:
+
+----
+python3 -m unittest test_greeting.py
+----
+
+When you do this, you should see the following output:
+
+----
+.
+--------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+----
+
+When you have this, go on to the next step.
+
+(Note: You may also be able to run the test using your IDE, depending
+on whether it includes special support for running Python unit
+tests. Because each IDE is different, and we can't take up class time
+covering all their differences, we recommend just using the command
+line during this class.)
+
+# Step 2
+
+Let's make our test actually check the behavior of the code.
+
+In "test_greeting.py", modify the "test_greet" method in the
+"TestGreeting" class. Remove the "pass", and instead call the "greet"
+function with the argument "John". Check its return value with
+`assertEqual()`, and assert that greet() returns "Hi, John".
+
+Very important: You are NOT modifying "greeting.py" yet. Only
+"test_greeting.py".
+
+Run the test (using "python3 -m unittest test_greeting.py"). You should
+see something similar to the following:
+
+----
+% python3 -m unittest test_greeting.py
+F
+======================================================================
+FAIL: test_greet (test_greeting.TestGreeting)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "labs/test_greeting.py", line 6, in test_greet
+    self.assertEqual("Hi, John", greet("John"))
+AssertionError: 'Hi, John' != ''
+- Hi, John
++ 
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (failures=1)
+----
+
+Yours may be a different in a couple of ways. Some line numbers may be
+different, and the assertEqual() line may look different too. (You may
+have stored greet()'s return value in a variable, for example.) But
+everything else should be the same, or close to it.
+
+Looking at your output, note that:
+
+ * You are shown the test module and test class.
+ * For this one failing test, you are shown the test method, and the line number.
+ * You are shown the expected and actual values, and how they differ.
+ * You wrote one test function, and the output indicates one failure.
+
+Identify all these elements in your output:
+
+ * Where is the test module ("test_greeting") specified?
+ * Where is the test class ("TestGreeting") specified?
+ * Where is the test method ("test_greet") specified?
+ * What is the line number of the failing test?
+
+Once you have done all of this, proceed to the next step.
+
+# Step 3
+
+Time to write actual application code. Modify "greeting.py" to make
+the test pass. Run it again with "python3 -m unittest
+test_greeting.py". When it's passing, you'll see the following output:
+
+----
+% python3 -m unittest test_greeting.py
+.
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+----
+
+Congratulations. You just did test-driven development!
+
+Now let's take off the training wheels. On to the next phase:
+
+### PHASE 2 ###
+
+In Phase 1, you were given partial code to modify. But you will not
+have that when you are writing real applications. So in Phase 2, you
+create everything yourself.
+
+In your labs folder, create a file named "person.py". This is not in
+your labs folder at first; you must create it yourself. Inside, put in
+these two lines:
+
+----
+class Person:
+    pass
+----
+
+Also in your labs folder, create another file, named
+"test_person.py". Inside, do the following:
+
+1) Import the `Person` class by writing this line:
+
+----
+from person import Person
+----
+
+2) Create a subclass of `unittest.TestCase`, named `TestPerson`. You
+will have to import the unittest module, of course.
+
+3) In this test case subclass, create a method named `test_main`.
+
+4) In this method, do the following:
+
+- Create an instance of `Person` named `guy`. Pass two arguments to
+  the class: "John" and "Doe".
+
+- Assert that `guy.first` is equal to "John".
+
+- Assert that `guy.last` is equal to "Doe".
+
+- Assert that `guy.full_name()` returns "John Doe".
+
+- Assert that `guy.formal_name("Mr.") returns "Mr. John Doe".
+
+5) Run the test:
+
+----
+python3 -m unittest test_person.py
+----
+
+Verify this command runs the test, and that it fails. You should see
+an error message like this:
+
+----
+ERROR: test_main (test_person.TestPerson)
+
+Traceback (most recent call last):
+  File "test_person.py", line 6, in test_main
+    guy = Person("John", "Doe")
+TypeError: Person() takes no arguments
+----
+
+6) In "person.py", remove the "pass" line, and write in the methods
+necessary to make the test pass. You have done so when you see output
+like this:
+
+----
+Ran 1 test in 0.000s
+
+OK
+----
+
+7) Look at the official solution for "test_person.py" and
+"person.py". Is it different from what you wrote? If so, what can you
+learn from that difference?
